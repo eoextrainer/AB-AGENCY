@@ -16,6 +16,7 @@ class TokenPayload(BaseModel):
 
 
 class UserBase(BaseModel):
+    username: str
     email: EmailStr
     full_name: str
     role: UserRole = UserRole.VIEWER
@@ -29,8 +30,21 @@ class UserRead(UserBase):
     model_config = ConfigDict(from_attributes=True)
 
     id: int
+    artist_id: int | None = None
     is_active: bool
     created_at: datetime
+
+
+class MediaAssetRead(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+
+    id: int
+    asset_type: str
+    title: str
+    url: str
+    thumbnail_url: str | None = None
+    alt_text: str | None = None
+    asset_metadata: dict = Field(default_factory=dict)
 
 
 class ArtistBase(BaseModel):
@@ -43,10 +57,14 @@ class ArtistBase(BaseModel):
     venue_type: str
     technical_requirements: dict = Field(default_factory=dict)
     bio: str
+    years_experience: int = 0
     featured: bool = False
     is_new: bool = False
     location: str = "London"
     travel_ready: bool = True
+    portrait_image_url: str | None = None
+    spoken_languages: list[str] = Field(default_factory=list)
+    performance_resume: list[dict] = Field(default_factory=list)
     hero_video_url: str | None = None
     teaser_video_url: str | None = None
 
@@ -59,6 +77,7 @@ class ArtistRead(ArtistBase):
     model_config = ConfigDict(from_attributes=True)
 
     id: int
+    media_assets: list[MediaAssetRead] = Field(default_factory=list)
     created_at: datetime
     updated_at: datetime
 
@@ -146,8 +165,15 @@ class AdminOverview(BaseModel):
 
 
 class LoginRequest(BaseModel):
-    email: EmailStr
+    identity: str | None = None
+    email: EmailStr | None = None
+    username: str | None = None
     password: str
+
+
+class ArtistPortal(BaseModel):
+    user: UserRead
+    artist: ArtistRead
 
 
 class PublicHomepage(BaseModel):

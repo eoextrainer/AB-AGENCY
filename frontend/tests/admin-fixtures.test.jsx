@@ -35,6 +35,6 @@ describe("admin page tables", () => {
     );
 
     expect(screen.getByText("Evelyn Hart")).toBeInTheDocument();
-    expect(screen.getByText("8,000 to 16,000")).toBeInTheDocument();
+    expect(screen.getByText("8,000 a 16,000")).toBeInTheDocument();
   });
 });

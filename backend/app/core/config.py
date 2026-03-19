@@ -12,7 +12,8 @@ class Settings(BaseSettings):
     database_url: str = "postgresql+psycopg://ab_agency:ab_agency@db:5432/ab_agency"
     cors_origins: list[str] = ["http://localhost:3000", "http://frontend:3000"]
     first_superuser_email: str = "admin@ab-agency.com"
-    first_superuser_password: str = "admin12345"
+    first_superuser_username: str = "admin"
+    first_superuser_password: str = "admin123"
     environment: str = "development"
     cms_project_id: str = "replace-me"
     cms_dataset: str = "production"

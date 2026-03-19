@@ -6,7 +6,7 @@ describe("AdminPageView", () => {
   it("renders fallback state without dashboard data", () => {
     render(<AdminPageView dashboard={null} />);
 
-    expect(screen.getByText("Administrative data is unavailable.")).toBeInTheDocument();
+    expect(screen.getByText("Les donnees administratives sont indisponibles.")).toBeInTheDocument();
   });
 
   it("renders dashboard metrics", () => {
@@ -21,9 +21,9 @@ describe("AdminPageView", () => {
       />
     );
 
-    expect(screen.getByText("Total artists")).toBeInTheDocument();
-    expect(screen.getByText("Submitted contacts")).toBeInTheDocument();
-    expect(screen.getByText("Requested events and budget targets")).toBeInTheDocument();
+    expect(screen.getByText("Artistes au catalogue")).toBeInTheDocument();
+    expect(screen.getByText("Contacts recus")).toBeInTheDocument();
+    expect(screen.getByText("Evenements demandes et budgets cibles")).toBeInTheDocument();
     expect(screen.getAllByText(/Acme/).length).toBeGreaterThan(0);
     expect(screen.getByText(/Jordan Vale/)).toBeInTheDocument();
   });

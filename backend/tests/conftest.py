@@ -59,6 +59,7 @@ def admin_user(db_session: Session) -> User:
 @pytest.fixture
 def editor_user(db_session: Session) -> User:
     user = User(
+        username="editor",
         email="editor@ab-agency.com",
         full_name="AB Editor",
         hashed_password=get_password_hash("editor-pass"),
@@ -73,6 +74,7 @@ def editor_user(db_session: Session) -> User:
 @pytest.fixture
 def viewer_user(db_session: Session) -> User:
     user = User(
+        username="viewer",
         email="viewer@ab-agency.com",
         full_name="AB Viewer",
         hashed_password=get_password_hash("viewer-pass"),
@@ -88,7 +90,7 @@ def viewer_user(db_session: Session) -> User:
 def auth_headers(client: TestClient) -> dict[str, str]:
     response = client.post(
         "/api/auth/login",
-        json={"email": "admin@ab-agency.com", "password": "admin12345"},
+        json={"username": "admin", "password": "admin123"},
     )
     token = response.json()["access_token"]
     return {"Authorization": f"Bearer {token}"}
@@ -107,7 +109,7 @@ def sample_inquiry(db_session: Session) -> Inquiry:
         budget_min=5000,
         budget_max=15000,
         preferred_disciplines=["Aerial"],
-        preferred_artist_slugs=["luna-silk-duo"],
+        preferred_artist_slugs=["celeste-aerienne"],
         message="Looking for a headline moment.",
         lead_score=85,
         status=InquiryStatus.QUALIFIED,
@@ -120,7 +122,7 @@ def sample_inquiry(db_session: Session) -> Inquiry:
 
 @pytest.fixture
 def sample_booking(db_session: Session, sample_inquiry: Inquiry) -> Booking:
-    artist = db_session.query(Artist).filter(Artist.slug == "luna-silk-duo").one()
+    artist = db_session.query(Artist).filter(Artist.slug == "celeste-aerienne").one()
     booking = Booking(
         inquiry_id=sample_inquiry.id,
         artist_id=artist.id,

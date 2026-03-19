@@ -1,7 +1,17 @@
 def test_login_returns_access_token(client):
     response = client.post(
         "/api/auth/login",
-        json={"email": "admin@ab-agency.com", "password": "admin12345"},
+        json={"username": "admin", "password": "admin123"},
+    )
+
+    assert response.status_code == 200
+    assert response.json()["token_type"] == "bearer"
+
+
+def test_artist_login_returns_access_token(client):
+    response = client.post(
+        "/api/auth/login",
+        json={"username": "ambre", "password": "pass123"},
     )
 
     assert response.status_code == 200
@@ -12,7 +22,7 @@ def test_me_returns_current_user(client, auth_headers):
     response = client.get("/api/auth/me", headers=auth_headers)
 
     assert response.status_code == 200
-    assert response.json()["email"] == "admin@ab-agency.com"
+    assert response.json()["username"] == "admin"
 
 
 def test_create_user_requires_admin(client, auth_headers):
@@ -20,6 +30,7 @@ def test_create_user_requires_admin(client, auth_headers):
         "/api/auth/users",
         headers=auth_headers,
         json={
+            "username": "new.user",
             "email": "new.user@ab-agency.com",
             "full_name": "New User",
             "password": "new-user-pass",
@@ -29,3 +40,4 @@ def test_create_user_requires_admin(client, auth_headers):
 
     assert response.status_code == 200
     assert response.json()["role"] == "editor"
+    assert response.json()["username"] == "new.user"

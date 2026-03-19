@@ -1,11 +1,11 @@
 from fastapi import APIRouter, Depends, HTTPException, Query, status
 from sqlalchemy import select
-from sqlalchemy.orm import Session
+from sqlalchemy.orm import Session, selectinload
 
-from app.api.deps import require_staff
+from app.api.deps import get_current_user, require_staff
 from app.db import get_db
 from app.models import Artist, User
-from app.schemas import ArtistCreate, ArtistRead
+from app.schemas import ArtistCreate, ArtistPortal, ArtistRead, UserRead
 
 router = APIRouter()
 
@@ -17,7 +17,7 @@ def list_artists(
     mood: str | None = Query(default=None),
     featured: bool | None = Query(default=None),
 ) -> list[Artist]:
-    query = select(Artist)
+    query = select(Artist).options(selectinload(Artist.media_assets))
     if discipline:
         query = query.where(Artist.discipline == discipline)
     if mood:
@@ -27,9 +27,21 @@ def list_artists(
     return list(db.scalars(query.order_by(Artist.name)).all())
 
 
+@router.get("/me/profile", response_model=ArtistPortal)
+def get_my_artist_profile(current_user: User = Depends(get_current_user), db: Session = Depends(get_db)) -> ArtistPortal:
+    if current_user.artist_id is None:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="No artist profile attached to this account")
+
+    artist = db.scalar(select(Artist).options(selectinload(Artist.media_assets)).where(Artist.id == current_user.artist_id))
+    if artist is None:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Artist profile not found")
+
+    return ArtistPortal(user=UserRead.model_validate(current_user), artist=ArtistRead.model_validate(artist))
+
+
 @router.get("/{slug}", response_model=ArtistRead)
 def get_artist(slug: str, db: Session = Depends(get_db)) -> Artist:
-    artist = db.scalar(select(Artist).where(Artist.slug == slug))
+    artist = db.scalar(select(Artist).options(selectinload(Artist.media_assets)).where(Artist.slug == slug))
     if artist is None:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Artist not found")
     return artist

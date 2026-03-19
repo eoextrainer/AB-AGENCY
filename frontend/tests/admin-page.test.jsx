@@ -12,6 +12,6 @@ describe("admin page", () => {
     const element = await AdminPage();
     render(element);
 
-    expect(screen.getByText("Administrative data is unavailable.")).toBeInTheDocument();
+    expect(screen.getByText("Les donnees administratives sont indisponibles.")).toBeInTheDocument();
   });
 });

@@ -12,10 +12,14 @@ CREATE TABLE IF NOT EXISTS artists (
     venue_type VARCHAR(100) NOT NULL,
     technical_requirements JSONB NOT NULL DEFAULT '{}'::jsonb,
     bio TEXT NOT NULL,
+    years_experience INTEGER NOT NULL DEFAULT 0,
     featured BOOLEAN NOT NULL DEFAULT FALSE,
     is_new BOOLEAN NOT NULL DEFAULT FALSE,
     location VARCHAR(150) NOT NULL DEFAULT 'London',
     travel_ready BOOLEAN NOT NULL DEFAULT TRUE,
+    portrait_image_url VARCHAR(500),
+    spoken_languages JSONB NOT NULL DEFAULT '[]'::jsonb,
+    performance_resume JSONB NOT NULL DEFAULT '[]'::jsonb,
     hero_video_url VARCHAR(500),
     teaser_video_url VARCHAR(500),
     created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
@@ -68,9 +72,11 @@ CREATE TABLE IF NOT EXISTS inquiries (
 
 CREATE TABLE IF NOT EXISTS users (
     id SERIAL PRIMARY KEY,
+    username VARCHAR(100) UNIQUE NOT NULL,
     email VARCHAR(255) UNIQUE NOT NULL,
     full_name VARCHAR(200) NOT NULL,
     hashed_password VARCHAR(255) NOT NULL,
+    artist_id INTEGER UNIQUE REFERENCES artists(id) ON DELETE SET NULL,
     role user_role NOT NULL DEFAULT 'viewer',
     is_active BOOLEAN NOT NULL DEFAULT TRUE,
     created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()

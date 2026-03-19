@@ -3,20 +3,20 @@ export function HomePage({ homepage, spotlight }) {
     <div className="page-stack">
       <section className="hero-panel">
         <div className="hero-copy">
-          <p className="eyebrow">Weightless. Precise. Bookable.</p>
+          <p className="eyebrow">Aerien. Precis. Reservable.</p>
           <h2>{homepage.hero_title}</h2>
           <p>{homepage.hero_subtitle}</p>
           <div className="cta-row">
             <a className="button button-primary" href="/inquiry">
-              Start Your Inquiry
+              Demarrer une demande
             </a>
             <a className="button button-secondary" href="/artists">
-              Explore Artists
+              Decouvrir les artistes
             </a>
           </div>
         </div>
         <div className="hero-card">
-          <p className="card-title">Trust markers</p>
+          <p className="card-title">Reperes de confiance</p>
           <ul>
             {homepage.trust_markers.map((marker) => (
               <li key={marker}>{marker}</li>
@@ -27,14 +27,22 @@ export function HomePage({ homepage, spotlight }) {
 
       <section className="content-grid">
         <div className="panel">
-          <p className="eyebrow">Featured artists</p>
+          <p className="eyebrow">Artistes en avant</p>
           <div className="artist-list">
             {homepage.featured_artists.map((artist) => (
               <article key={artist.slug} className="artist-card compact">
-                <div>
-                  <span className="tag">{artist.discipline}</span>
-                  <h3>{artist.name}</h3>
-                  <p>{artist.headline}</p>
+                <div className="featured-artist-card">
+                  <div>
+                    <span className="tag">{artist.discipline}</span>
+                    <h3>{artist.name}</h3>
+                    <p>{artist.headline}</p>
+                  </div>
+                  <div className="video-tile">
+                    <video autoPlay muted loop playsInline poster={artist.portrait_image_url || artist.media_assets?.[0]?.thumbnail_url || undefined}>
+                      <source src={artist.teaser_video_url || artist.hero_video_url} />
+                    </video>
+                    <span className="video-tile-label">Extrait video</span>
+                  </div>
                 </div>
                 <div className="card-meta">
                   <span>{artist.group_size}</span>
@@ -46,9 +54,15 @@ export function HomePage({ homepage, spotlight }) {
         </div>
 
         <div className="panel spotlight-panel">
-          <p className="eyebrow">CMS spotlight</p>
+          <p className="eyebrow">Focus contenu</p>
           <h3>{spotlight.title}</h3>
           <p>{spotlight.body}</p>
+          <div className="video-tile spotlight-video">
+            <video autoPlay muted loop playsInline poster={spotlight.videoPoster}>
+              <source src={spotlight.videoUrl} />
+            </video>
+            <span className="video-tile-label">Capsule curatoriale</span>
+          </div>
           <ul>
             {spotlight.highlights.map((highlight) => (
               <li key={highlight}>{highlight}</li>
@@ -58,7 +72,7 @@ export function HomePage({ homepage, spotlight }) {
       </section>
 
       <section className="panel services-panel">
-        <p className="eyebrow">Service focus</p>
+        <p className="eyebrow">Axes de service</p>
         <div className="pill-grid">
           {homepage.featured_services.map((service) => (
             <span key={service} className="pill">

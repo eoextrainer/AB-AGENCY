@@ -1,7 +1,13 @@
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:8000/api";
+const PUBLIC_API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:8000/api";
+const SERVER_API_BASE_URL = process.env.NEXT_SERVER_API_BASE_URL || PUBLIC_API_BASE_URL;
+export const SESSION_TOKEN_KEY = "abAgencySessionToken";
+
+function getApiBaseUrl() {
+  return typeof window === "undefined" ? SERVER_API_BASE_URL : PUBLIC_API_BASE_URL;
+}
 
 export function buildApiUrl(path) {
-  return `${API_BASE_URL}${path}`;
+  return `${getApiBaseUrl()}${path}`;
 }
 
 async function fetchJson(path, options = {}) {
@@ -22,7 +28,7 @@ async function fetchJson(path, options = {}) {
 }
 
 export async function getAdminAccessToken(credentials) {
-  if (!credentials?.email || !credentials?.password) {
+  if (!(credentials?.identity || credentials?.username || credentials?.email) || !credentials?.password) {
     return null;
   }
 
@@ -50,11 +56,11 @@ export async function getHomepageData() {
     return await fetchJson("/public/homepage");
   } catch {
     return {
-      hero_title: "Performance that suspends disbelief.",
-      hero_subtitle: "AB Agency curates aerial, acrobatic, and immersive acts for luxury, festival, and brand events.",
+      hero_title: "Des performances qui suspendent l'incredulite.",
+      hero_subtitle: "AB Agency imagine des actes aeriens, acrobatiques et immersifs pour les evenements de luxe, les festivals et les marques exigeantes.",
       featured_artists: [],
-      trust_markers: ["International touring support", "Rigging-aware production planning", "Fast response for event planners"],
-      featured_services: ["Talent Representation", "Production Support", "Creative Consulting"]
+      trust_markers: ["Accompagnement international", "Preparation technique anticipee", "Reponse rapide pour les equipes evenementielles"],
+      featured_services: ["Representation artistique", "Pilotage de production", "Conseil creatif"]
     };
   }
 }
@@ -81,6 +87,30 @@ export async function getDashboardSnapshot(token) {
 
   try {
     return await fetchJson("/dashboard/overview", { headers: { Authorization: `Bearer ${token}` } });
+  } catch {
+    return null;
+  }
+}
+
+export async function getCurrentUser(token) {
+  if (!token) {
+    return null;
+  }
+
+  try {
+    return await fetchJson("/auth/me", { headers: { Authorization: `Bearer ${token}` } });
+  } catch {
+    return null;
+  }
+}
+
+export async function getArtistPortal(token) {
+  if (!token) {
+    return null;
+  }
+
+  try {
+    return await fetchJson("/artists/me/profile", { headers: { Authorization: `Bearer ${token}` } });
   } catch {
     return null;
   }

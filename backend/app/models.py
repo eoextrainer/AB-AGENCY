@@ -43,10 +43,14 @@ class Artist(Base):
     venue_type: Mapped[str] = mapped_column(String(100), index=True)
     technical_requirements: Mapped[dict] = mapped_column(JSON, default=dict)
     bio: Mapped[str] = mapped_column(Text)
+    years_experience: Mapped[int] = mapped_column(Integer, default=0)
     featured: Mapped[bool] = mapped_column(Boolean, default=False)
     is_new: Mapped[bool] = mapped_column(Boolean, default=False)
     location: Mapped[str] = mapped_column(String(150), default="London")
     travel_ready: Mapped[bool] = mapped_column(Boolean, default=True)
+    portrait_image_url: Mapped[str | None] = mapped_column(String(500))
+    spoken_languages: Mapped[list[str]] = mapped_column(JSON, default=list)
+    performance_resume: Mapped[list[dict]] = mapped_column(JSON, default=list)
     hero_video_url: Mapped[str | None] = mapped_column(String(500))
     teaser_video_url: Mapped[str | None] = mapped_column(String(500))
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=utc_now)
@@ -54,6 +58,7 @@ class Artist(Base):
 
     media_assets: Mapped[list["MediaAsset"]] = relationship(back_populates="artist", cascade="all, delete-orphan")
     testimonials: Mapped[list["Testimonial"]] = relationship(back_populates="artist", cascade="all, delete-orphan")
+    user: Mapped["User | None"] = relationship(back_populates="artist", uselist=False)
 
 
 class MediaAsset(Base):
@@ -114,12 +119,16 @@ class User(Base):
     __tablename__ = "users"
 
     id: Mapped[int] = mapped_column(primary_key=True)
+    username: Mapped[str] = mapped_column(String(100), unique=True, index=True)
     email: Mapped[str] = mapped_column(String(255), unique=True, index=True)
     full_name: Mapped[str] = mapped_column(String(200))
     hashed_password: Mapped[str] = mapped_column(String(255))
+    artist_id: Mapped[int | None] = mapped_column(ForeignKey("artists.id", ondelete="SET NULL"), unique=True)
     role: Mapped[UserRole] = mapped_column(Enum(UserRole, values_callable=enum_values), default=UserRole.VIEWER)
     is_active: Mapped[bool] = mapped_column(Boolean, default=True)
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=utc_now)
+
+    artist: Mapped[Artist | None] = relationship(back_populates="user")
 
 
 class Booking(Base):

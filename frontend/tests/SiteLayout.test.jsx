@@ -11,6 +11,7 @@ describe("SiteLayout", () => {
     );
 
     expect(screen.getByText("AB Agency")).toBeInTheDocument();
+    expect(screen.getByText("Connexion")).toBeInTheDocument();
     expect(screen.getByText("Inner content")).toBeInTheDocument();
   });
 });

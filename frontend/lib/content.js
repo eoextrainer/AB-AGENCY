@@ -1,12 +1,12 @@
 export const navigation = [
-  { href: "/", label: "Home" },
-  { href: "/artists", label: "Artists" },
-  { href: "/inquiry", label: "Inquiry" },
-  { href: "/admin", label: "Admin" }
+  { href: "/", label: "Accueil" },
+  { href: "/artists", label: "Artistes" },
+  { href: "/inquiry", label: "Demande" },
+  { href: "/login", label: "Connexion" }
 ];
 
 export const servicePillars = [
-  "Talent representation for luxury, festival, and brand events",
-  "Production coordination with rigging and venue-readiness in mind",
-  "Creative consulting for custom performance concepts"
+  "Representation artistique pour les evenements luxe, festival et marque",
+  "Coordination de production avec anticipation technique et securitaire",
+  "Conseil creatif pour concevoir des performances sur mesure"
 ];

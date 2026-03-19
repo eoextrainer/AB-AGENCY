@@ -7,17 +7,19 @@ describe("HomePage", () => {
     render(
       <HomePage
         homepage={{
-          hero_title: "Gravity-defying performance.",
-          hero_subtitle: "Luxury event performance.",
-          featured_artists: [{ slug: "luna", discipline: "Aerial", name: "Luna", headline: "Suspended duet.", group_size: "Duo", mood: "Ethereal" }],
+          hero_title: "Performance vertigineuse.",
+          hero_subtitle: "Performance pour evenement premium.",
+          featured_artists: [{ slug: "luna", discipline: "Danse aerienne", name: "Luna", headline: "Duo suspendu.", group_size: "Duo", mood: "Ethere", teaser_video_url: "https://example.com/luna.mp4", media_assets: [] }],
           trust_markers: ["Safe", "Touring-ready"],
           featured_services: ["Representation"]
         }}
-        spotlight={{ title: "Spotlight", body: "Body", highlights: ["One"] }}
+        spotlight={{ title: "Focus", body: "Body", videoUrl: "https://example.com/spotlight.mp4", videoPoster: "https://example.com/poster.jpg", highlights: ["One"] }}
       />
     );
 
-    expect(screen.getByText("Gravity-defying performance.")).toBeInTheDocument();
+    expect(screen.getByText("Performance vertigineuse.")).toBeInTheDocument();
     expect(screen.getByText("Luna")).toBeInTheDocument();
+    expect(screen.getByText("Extrait video")).toBeInTheDocument();
+    expect(screen.getByText("Capsule curatoriale")).toBeInTheDocument();
   });
 });

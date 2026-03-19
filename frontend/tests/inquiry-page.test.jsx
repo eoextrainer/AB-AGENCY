@@ -11,6 +11,6 @@ describe("inquiry page", () => {
     const element = await InquiryPage({ searchParams: Promise.resolve({ artist: "luna" }) });
     render(element);
 
-    expect(screen.getByText("Submit inquiry")).toBeInTheDocument();
+    expect(screen.getByText("Envoyer la demande")).toBeInTheDocument();
   });
 });

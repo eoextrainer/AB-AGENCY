@@ -31,7 +31,7 @@ export function InquiryPageView({ artists = [], initialArtist = "" }) {
 
   async function handleSubmit(event) {
     event.preventDefault();
-    setStatus({ type: "loading", message: "Submitting inquiry..." });
+    setStatus({ type: "loading", message: "Envoi de la demande en cours..." });
 
     try {
       const payload = {
@@ -42,9 +42,9 @@ export function InquiryPageView({ artists = [], initialArtist = "" }) {
         budget_max: formState.budget_max ? Number(formState.budget_max) : null
       };
       const response = await submitInquiry(payload);
-      setStatus({ type: "success", message: `Inquiry captured with lead score ${response.lead_score}.` });
+      setStatus({ type: "success", message: `Demande enregistree avec un score de priorite de ${response.lead_score}.` });
     } catch {
-      setStatus({ type: "error", message: "Inquiry submission failed. Please retry or contact the team directly." });
+      setStatus({ type: "error", message: "L'envoi a echoue. Merci de reessayer ou de contacter l'equipe directement." });
     }
   }
 
@@ -60,19 +60,19 @@ export function InquiryPageView({ artists = [], initialArtist = "" }) {
   return (
     <div className="page-stack">
       <section className="panel">
-        <p className="eyebrow">Inquiry</p>
-        <h2>Capture the production details that close the deal.</h2>
-        <p className="muted">The form is wired to the backend CRM lead endpoint and scores each inquiry based on event type, venue fit, and budget strength.</p>
+        <p className="eyebrow">Demande</p>
+        <h2>Rassemblez les details de production qui font avancer la reservation.</h2>
+        <p className="muted">Ce formulaire alimente directement le backend et evalue chaque demande selon le type d'evenement, l'adaptation du lieu et la solidite budgetaire.</p>
       </section>
 
       <form className="panel inquiry-form" onSubmit={handleSubmit}>
         <div className="form-grid">
           <label>
-            Company
+            Societe
             <input value={formState.company_name} onChange={(event) => setFormState((current) => ({ ...current, company_name: event.target.value }))} required />
           </label>
           <label>
-            Contact name
+            Nom du contact
             <input value={formState.contact_name} onChange={(event) => setFormState((current) => ({ ...current, contact_name: event.target.value }))} required />
           </label>
           <label>
@@ -80,40 +80,40 @@ export function InquiryPageView({ artists = [], initialArtist = "" }) {
             <input type="email" value={formState.email} onChange={(event) => setFormState((current) => ({ ...current, email: event.target.value }))} required />
           </label>
           <label>
-            Phone
+            Telephone
             <input value={formState.phone} onChange={(event) => setFormState((current) => ({ ...current, phone: event.target.value }))} />
           </label>
           <label>
-            Event type
+            Type d'evenement
             <input value={formState.event_type} onChange={(event) => setFormState((current) => ({ ...current, event_type: event.target.value }))} required />
           </label>
           <label>
-            Event date
+            Date de l'evenement
             <input type="datetime-local" value={formState.event_date} onChange={(event) => setFormState((current) => ({ ...current, event_date: event.target.value }))} />
           </label>
           <label>
-            Location
+            Lieu
             <input value={formState.location} onChange={(event) => setFormState((current) => ({ ...current, location: event.target.value }))} required />
           </label>
           <label>
-            Venue type
+            Type de lieu
             <input value={formState.venue_type} onChange={(event) => setFormState((current) => ({ ...current, venue_type: event.target.value }))} />
           </label>
           <label>
-            Ceiling height (m)
+            Hauteur sous plafond (m)
             <input value={formState.ceiling_height_meters} onChange={(event) => setFormState((current) => ({ ...current, ceiling_height_meters: event.target.value }))} />
           </label>
           <label>
-            Budget min
+            Budget minimum
             <input value={formState.budget_min} onChange={(event) => setFormState((current) => ({ ...current, budget_min: event.target.value }))} />
           </label>
           <label>
-            Budget max
+            Budget maximum
             <input value={formState.budget_max} onChange={(event) => setFormState((current) => ({ ...current, budget_max: event.target.value }))} />
           </label>
         </div>
         <fieldset>
-          <legend>Preferred artists</legend>
+          <legend>Artistes preferes</legend>
           <div className="pill-grid">
             {artistOptions.map((artist) => (
               <label key={artist.slug} className="pill-checkbox">
@@ -128,7 +128,7 @@ export function InquiryPageView({ artists = [], initialArtist = "" }) {
           </div>
         </fieldset>
         <label>
-          Preferred disciplines
+          Disciplines souhaitees
           <input
             value={formState.preferred_disciplines.join(", ")}
             onChange={(event) =>
@@ -140,7 +140,7 @@ export function InquiryPageView({ artists = [], initialArtist = "" }) {
                   .filter(Boolean)
               }))
             }
-            placeholder="Aerial, Ground Performance, Duo"
+            placeholder="Danse aerienne, Danse acrobatique, Solo"
           />
         </label>
         <label>
@@ -148,7 +148,7 @@ export function InquiryPageView({ artists = [], initialArtist = "" }) {
           <textarea rows="5" value={formState.message} onChange={(event) => setFormState((current) => ({ ...current, message: event.target.value }))} required />
         </label>
         <button className="button button-primary" type="submit">
-          Submit inquiry
+          Envoyer la demande
         </button>
         <p role="status">{status.message}</p>
       </form>

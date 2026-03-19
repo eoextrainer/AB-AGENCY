@@ -183,6 +183,11 @@ textarea {
   gap: 16px;
 }
 
+.artist-roster {
+  display: grid;
+  gap: 20px;
+}
+
 .artist-card,
 .compare-card {
   padding: 20px;
@@ -191,6 +196,53 @@ textarea {
 .artist-card {
   display: grid;
   gap: 16px;
+}
+
+.featured-artist-card {
+  display: grid;
+  gap: 14px;
+}
+
+.artist-row {
+  display: grid;
+  gap: 20px;
+  grid-template-columns: minmax(280px, 0.95fr) minmax(0, 1.35fr);
+}
+
+.artist-profile-pane,
+.artist-media-pane,
+.profile-layout,
+.auth-shell,
+.portal-stack {
+  display: grid;
+  gap: 18px;
+}
+
+.artist-identity-block,
+.auth-shell {
+  display: grid;
+  gap: 18px;
+}
+
+.artist-identity-block {
+  grid-template-columns: 132px minmax(0, 1fr);
+  align-items: center;
+}
+
+.artist-portrait,
+.profile-portrait {
+  width: 132px;
+  height: 160px;
+  object-fit: cover;
+  border-radius: 24px;
+  border: 1px solid rgba(185, 146, 90, 0.3);
+  box-shadow: 0 12px 24px rgba(164, 134, 94, 0.2);
+  background: rgba(255, 255, 255, 0.8);
+}
+
+.profile-portrait {
+  width: 180px;
+  height: 220px;
 }
 
 .card-meta,
@@ -313,12 +365,210 @@ textarea {
   border: 1px solid var(--line);
 }
 
+.info-table,
+.resume-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: rgba(255, 255, 255, 0.76);
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+.info-table th,
+.info-table td,
+.resume-table th,
+.resume-table td {
+  padding: 12px 14px;
+  text-align: left;
+  border-bottom: 1px solid var(--line);
+}
+
+.info-table th,
+.resume-table th {
+  color: var(--accent-strong);
+  width: 35%;
+}
+
+.compact-table th {
+  width: 38%;
+}
+
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.video-tile {
+  position: relative;
+  overflow: hidden;
+  border-radius: 20px;
+  border: 1px solid rgba(185, 146, 90, 0.26);
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.7), rgba(238, 228, 214, 0.82));
+  box-shadow: 0 16px 30px rgba(154, 123, 82, 0.16);
+}
+
+.video-tile video {
+  display: block;
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  filter: saturate(0.92) contrast(1.04);
+}
+
+.spotlight-video video {
+  height: 240px;
+}
+
+.video-tile::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 35%, rgba(54, 39, 23, 0.46) 100%);
+  pointer-events: none;
+}
+
+.video-tile-label {
+  position: absolute;
+  left: 14px;
+  bottom: 14px;
+  z-index: 1;
+  padding: 8px 12px;
+  border-radius: 999px;
+  background: rgba(255, 250, 243, 0.9);
+  color: #5b4634;
+  border: 1px solid rgba(185, 146, 90, 0.28);
+  font-size: 0.78rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.gallery-tile {
+  position: relative;
+  border: 0;
+  padding: 0;
+  border-radius: 18px;
+  overflow: hidden;
+  cursor: pointer;
+  background: rgba(255, 255, 255, 0.7);
+  box-shadow: 0 10px 24px rgba(164, 134, 94, 0.18);
+}
+
+.gallery-tile img {
+  display: block;
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+}
+
+.gallery-caption,
+.gallery-badge {
+  position: absolute;
+  left: 10px;
+  border-radius: 999px;
+  background: rgba(47, 35, 22, 0.72);
+  color: #fffaf3;
+  padding: 6px 10px;
+  font-size: 0.75rem;
+}
+
+.gallery-caption {
+  bottom: 10px;
+}
+
+.gallery-badge {
+  top: 10px;
+}
+
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: grid;
+  place-items: center;
+  padding: 32px;
+  background: rgba(44, 31, 18, 0.76);
+}
+
+.lightbox-panel {
+  width: min(980px, 100%);
+  max-height: 90vh;
+  overflow: auto;
+  border-radius: 28px;
+  background: rgba(255, 251, 245, 0.96);
+  padding: 24px;
+  box-shadow: 0 24px 60px rgba(44, 31, 18, 0.25);
+}
+
+.lightbox-media,
+.lightbox-media video,
+.lightbox-media img {
+  width: 100%;
+  border-radius: 20px;
+}
+
+.credentials-drawer {
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.64);
+  padding: 14px 16px;
+}
+
+.credentials-drawer summary {
+  cursor: pointer;
+  color: var(--accent-strong);
+}
+
+.credentials-list {
+  display: grid;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.credential-item {
+  display: grid;
+  gap: 4px;
+  padding: 12px 14px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.78);
+  border: 1px solid var(--line);
+}
+
+.auth-form {
+  display: grid;
+  gap: 14px;
+}
+
+.auth-actions,
+.portal-header {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.portal-grid {
+  display: grid;
+  gap: 20px;
+  grid-template-columns: minmax(280px, 0.9fr) minmax(0, 1.1fr);
+}
+
+.profile-card {
+  display: grid;
+  gap: 18px;
+}
+
 @media (max-width: 900px) {
   .hero-panel,
   .content-grid,
   .stats-grid,
   .filter-grid,
-  .form-grid {
+  .form-grid,
+  .artist-row,
+  .portal-grid,
+  .artist-identity-block,
+  .gallery-grid {
     grid-template-columns: 1fr;
   }
 

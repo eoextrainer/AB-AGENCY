@@ -8,7 +8,7 @@ export function SiteLayout({ children }) {
           <img className="brand-logo" src="/logo.png" alt="AB Agency logo" />
           <div>
             <p className="eyebrow">AB Agency</p>
-            <h1 className="wordmark">Luxury performance, engineered for booking confidence.</h1>
+            <h1 className="wordmark">La performance de prestige, structuree pour reserver avec confiance.</h1>
           </div>
         </div>
         <nav className="main-nav" aria-label="Primary">

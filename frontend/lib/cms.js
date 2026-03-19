@@ -7,12 +7,14 @@ export const cmsConfig = {
 
 export async function getCmsSpotlight() {
   return {
-    title: "The dream team behind every booking.",
-    body: "AB Agency aligns artistry, technical planning, and buyer confidence so event planners can move from inspiration to booking without friction.",
+    title: "L'equipe de confiance derriere chaque reservation.",
+    body: "AB Agency aligne direction artistique, planification technique et lisibilite commerciale pour faire passer un projet de l'inspiration a la reservation sans friction.",
+    videoUrl: "https://cdn.coverr.co/videos/coverr-dance-performance-on-stage-1571730835234?download=1080p",
+    videoPoster: "https://images.unsplash.com/photo-1503095396549-807759245b35?auto=format&fit=crop&w=900&q=80",
     highlights: [
-      "Creative direction that frames each act with luxury editorial clarity.",
-      "Sales-aware inquiry design that captures venue dimensions, production needs, and budget intent.",
-      "Headless CMS-ready content modeling for video-heavy artist pages and service storytelling."
+      "Une direction creative qui donne a chaque acte une presence editoriale nette et premium.",
+      "Un formulaire de demande concu pour capter les dimensions, les besoins techniques et l'intention budgetaire.",
+      "Une structure de contenu prete pour des pages artistes riches en photo, video et narration de service."
     ]
   };
 }
