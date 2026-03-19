@@ -11,6 +11,10 @@ def utc_now() -> datetime:
     return datetime.now(timezone.utc)
 
 
+def enum_values(enum_cls) -> list[str]:
+    return [member.value for member in enum_cls]
+
+
 class UserRole(StrEnum):
     ADMIN = "admin"
     EDITOR = "editor"
@@ -102,7 +106,7 @@ class Inquiry(Base):
     message: Mapped[str] = mapped_column(Text)
     lead_score: Mapped[int] = mapped_column(Integer, default=0)
     source: Mapped[str] = mapped_column(String(100), default="website")
-    status: Mapped[InquiryStatus] = mapped_column(Enum(InquiryStatus), default=InquiryStatus.NEW)
+    status: Mapped[InquiryStatus] = mapped_column(Enum(InquiryStatus, values_callable=enum_values), default=InquiryStatus.NEW)
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=utc_now)
 
 
@@ -113,7 +117,7 @@ class User(Base):
     email: Mapped[str] = mapped_column(String(255), unique=True, index=True)
     full_name: Mapped[str] = mapped_column(String(200))
     hashed_password: Mapped[str] = mapped_column(String(255))
-    role: Mapped[UserRole] = mapped_column(Enum(UserRole), default=UserRole.VIEWER)
+    role: Mapped[UserRole] = mapped_column(Enum(UserRole, values_callable=enum_values), default=UserRole.VIEWER)
     is_active: Mapped[bool] = mapped_column(Boolean, default=True)
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=utc_now)
 
