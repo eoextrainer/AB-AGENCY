@@ -18,8 +18,30 @@ CREATE TABLE IF NOT EXISTS artists (
     travel_ready BOOLEAN NOT NULL DEFAULT TRUE,
     hero_video_url VARCHAR(500),
     teaser_video_url VARCHAR(500),
-    created_at TIMESTAMP NOT NULL DEFAULT NOW(),
-    updated_at TIMESTAMP NOT NULL DEFAULT NOW()
+    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+CREATE TABLE IF NOT EXISTS media_assets (
+    id SERIAL PRIMARY KEY,
+    artist_id INTEGER REFERENCES artists(id) ON DELETE CASCADE,
+    asset_type VARCHAR(50) NOT NULL,
+    title VARCHAR(200) NOT NULL,
+    url VARCHAR(500) NOT NULL,
+    thumbnail_url VARCHAR(500),
+    alt_text VARCHAR(255),
+    asset_metadata JSONB NOT NULL DEFAULT '{}'::jsonb,
+    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+CREATE TABLE IF NOT EXISTS testimonials (
+    id SERIAL PRIMARY KEY,
+    artist_id INTEGER REFERENCES artists(id) ON DELETE SET NULL,
+    client_name VARCHAR(200) NOT NULL,
+    client_type VARCHAR(100) NOT NULL,
+    quote TEXT NOT NULL,
+    event_name VARCHAR(200),
+    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 
 CREATE TABLE IF NOT EXISTS inquiries (
@@ -29,7 +51,7 @@ CREATE TABLE IF NOT EXISTS inquiries (
     email VARCHAR(255) NOT NULL,
     phone VARCHAR(50),
     event_type VARCHAR(100) NOT NULL,
-    event_date TIMESTAMP,
+    event_date TIMESTAMPTZ,
     location VARCHAR(200) NOT NULL,
     venue_type VARCHAR(100),
     ceiling_height_meters INTEGER,
@@ -41,7 +63,7 @@ CREATE TABLE IF NOT EXISTS inquiries (
     lead_score INTEGER NOT NULL DEFAULT 0,
     source VARCHAR(100) NOT NULL DEFAULT 'website',
     status inquiry_status NOT NULL DEFAULT 'new',
-    created_at TIMESTAMP NOT NULL DEFAULT NOW()
+    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 
 CREATE TABLE IF NOT EXISTS users (
@@ -51,5 +73,60 @@ CREATE TABLE IF NOT EXISTS users (
     hashed_password VARCHAR(255) NOT NULL,
     role user_role NOT NULL DEFAULT 'viewer',
     is_active BOOLEAN NOT NULL DEFAULT TRUE,
-    created_at TIMESTAMP NOT NULL DEFAULT NOW()
+    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+CREATE TABLE IF NOT EXISTS bookings (
+    id SERIAL PRIMARY KEY,
+    inquiry_id INTEGER REFERENCES inquiries(id) ON DELETE SET NULL,
+    artist_id INTEGER REFERENCES artists(id) ON DELETE SET NULL,
+    booking_date TIMESTAMPTZ,
+    status VARCHAR(100) NOT NULL DEFAULT 'tentative',
+    fee_amount NUMERIC(10,2),
+    deposit_paid BOOLEAN NOT NULL DEFAULT FALSE,
+    contract_url VARCHAR(500),
+    production_notes TEXT,
+    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+CREATE TABLE IF NOT EXISTS availability_slots (
+    id SERIAL PRIMARY KEY,
+    artist_id INTEGER NOT NULL REFERENCES artists(id) ON DELETE CASCADE,
+    start_date TIMESTAMPTZ NOT NULL,
+    end_date TIMESTAMPTZ NOT NULL,
+    status VARCHAR(50) NOT NULL DEFAULT 'available',
+    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+CREATE TABLE IF NOT EXISTS case_studies (
+    id SERIAL PRIMARY KEY,
+    slug VARCHAR(120) UNIQUE NOT NULL,
+    title VARCHAR(200) NOT NULL,
+    event_context VARCHAR(150) NOT NULL,
+    challenge TEXT NOT NULL,
+    solution TEXT NOT NULL,
+    client_name VARCHAR(200),
+    hero_image_url VARCHAR(500),
+    video_url VARCHAR(500),
+    featured_artist_slugs JSONB NOT NULL DEFAULT '[]'::jsonb,
+    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+CREATE TABLE IF NOT EXISTS service_pages (
+    id SERIAL PRIMARY KEY,
+    slug VARCHAR(120) UNIQUE NOT NULL,
+    title VARCHAR(200) NOT NULL,
+    summary TEXT NOT NULL,
+    body TEXT NOT NULL,
+    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+CREATE TABLE IF NOT EXISTS audit_events (
+    id SERIAL PRIMARY KEY,
+    user_email VARCHAR(255),
+    action VARCHAR(100) NOT NULL,
+    entity_type VARCHAR(100) NOT NULL,
+    entity_id VARCHAR(100) NOT NULL,
+    payload JSONB NOT NULL DEFAULT '{}'::jsonb,
+    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );

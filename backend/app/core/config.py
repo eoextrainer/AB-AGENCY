@@ -1,3 +1,5 @@
+from functools import lru_cache
+
 from pydantic import computed_field
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
@@ -11,6 +13,7 @@ class Settings(BaseSettings):
     cors_origins: list[str] = ["http://localhost:3000", "http://frontend:3000"]
     first_superuser_email: str = "admin@ab-agency.com"
     first_superuser_password: str = "admin12345"
+    environment: str = "development"
     cms_project_id: str = "replace-me"
     cms_dataset: str = "production"
     cms_api_version: str = "2025-01-01"
@@ -23,4 +26,9 @@ class Settings(BaseSettings):
         return True
 
 
-settings = Settings()
+@lru_cache
+def get_settings() -> Settings:
+    return Settings()
+
+
+settings = get_settings()

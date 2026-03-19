@@ -1,10 +1,14 @@
-from datetime import datetime
+from datetime import datetime, timezone
 from enum import StrEnum
 
-from sqlalchemy import JSON, Boolean, Date, DateTime, Enum, ForeignKey, Integer, Numeric, String, Text
+from sqlalchemy import JSON, Boolean, DateTime, Enum, ForeignKey, Integer, Numeric, String, Text
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.db import Base
+
+
+def utc_now() -> datetime:
+    return datetime.now(timezone.utc)
 
 
 class UserRole(StrEnum):
@@ -41,8 +45,8 @@ class Artist(Base):
     travel_ready: Mapped[bool] = mapped_column(Boolean, default=True)
     hero_video_url: Mapped[str | None] = mapped_column(String(500))
     teaser_video_url: Mapped[str | None] = mapped_column(String(500))
-    created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
-    updated_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=utc_now)
+    updated_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=utc_now, onupdate=utc_now)
 
     media_assets: Mapped[list["MediaAsset"]] = relationship(back_populates="artist", cascade="all, delete-orphan")
     testimonials: Mapped[list["Testimonial"]] = relationship(back_populates="artist", cascade="all, delete-orphan")
@@ -58,8 +62,8 @@ class MediaAsset(Base):
     url: Mapped[str] = mapped_column(String(500))
     thumbnail_url: Mapped[str | None] = mapped_column(String(500))
     alt_text: Mapped[str | None] = mapped_column(String(255))
-    metadata: Mapped[dict] = mapped_column(JSON, default=dict)
-    created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
+    asset_metadata: Mapped[dict] = mapped_column(JSON, default=dict)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=utc_now)
 
     artist: Mapped[Artist | None] = relationship(back_populates="media_assets")
 
@@ -73,7 +77,7 @@ class Testimonial(Base):
     client_type: Mapped[str] = mapped_column(String(100))
     quote: Mapped[str] = mapped_column(Text)
     event_name: Mapped[str | None] = mapped_column(String(200))
-    created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=utc_now)
 
     artist: Mapped[Artist | None] = relationship(back_populates="testimonials")
 
@@ -87,7 +91,7 @@ class Inquiry(Base):
     email: Mapped[str] = mapped_column(String(255), index=True)
     phone: Mapped[str | None] = mapped_column(String(50))
     event_type: Mapped[str] = mapped_column(String(100), index=True)
-    event_date: Mapped[datetime | None] = mapped_column(DateTime)
+    event_date: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
     location: Mapped[str] = mapped_column(String(200))
     venue_type: Mapped[str | None] = mapped_column(String(100))
     ceiling_height_meters: Mapped[int | None] = mapped_column(Integer)
@@ -99,7 +103,7 @@ class Inquiry(Base):
     lead_score: Mapped[int] = mapped_column(Integer, default=0)
     source: Mapped[str] = mapped_column(String(100), default="website")
     status: Mapped[InquiryStatus] = mapped_column(Enum(InquiryStatus), default=InquiryStatus.NEW)
-    created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=utc_now)
 
 
 class User(Base):
@@ -111,7 +115,7 @@ class User(Base):
     hashed_password: Mapped[str] = mapped_column(String(255))
     role: Mapped[UserRole] = mapped_column(Enum(UserRole), default=UserRole.VIEWER)
     is_active: Mapped[bool] = mapped_column(Boolean, default=True)
-    created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=utc_now)
 
 
 class Booking(Base):
@@ -120,12 +124,13 @@ class Booking(Base):
     id: Mapped[int] = mapped_column(primary_key=True)
     inquiry_id: Mapped[int | None] = mapped_column(ForeignKey("inquiries.id", ondelete="SET NULL"))
     artist_id: Mapped[int | None] = mapped_column(ForeignKey("artists.id", ondelete="SET NULL"))
-    booking_date: Mapped[datetime | None] = mapped_column(DateTime)
+    booking_date: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
     status: Mapped[str] = mapped_column(String(100), default="tentative")
     fee_amount: Mapped[float | None] = mapped_column(Numeric(10, 2))
     deposit_paid: Mapped[bool] = mapped_column(Boolean, default=False)
     contract_url: Mapped[str | None] = mapped_column(String(500))
     production_notes: Mapped[str | None] = mapped_column(Text)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=utc_now)
 
 
 class AvailabilitySlot(Base):
@@ -133,9 +138,10 @@ class AvailabilitySlot(Base):
 
     id: Mapped[int] = mapped_column(primary_key=True)
     artist_id: Mapped[int] = mapped_column(ForeignKey("artists.id", ondelete="CASCADE"), index=True)
-    start_date: Mapped[datetime] = mapped_column(DateTime)
-    end_date: Mapped[datetime] = mapped_column(DateTime)
+    start_date: Mapped[datetime] = mapped_column(DateTime(timezone=True))
+    end_date: Mapped[datetime] = mapped_column(DateTime(timezone=True))
     status: Mapped[str] = mapped_column(String(50), default="available")
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=utc_now)
 
 
 class CaseStudy(Base):
@@ -151,6 +157,7 @@ class CaseStudy(Base):
     hero_image_url: Mapped[str | None] = mapped_column(String(500))
     video_url: Mapped[str | None] = mapped_column(String(500))
     featured_artist_slugs: Mapped[list[str]] = mapped_column(JSON, default=list)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=utc_now)
 
 
 class ServicePage(Base):
@@ -161,6 +168,7 @@ class ServicePage(Base):
     title: Mapped[str] = mapped_column(String(200))
     summary: Mapped[str] = mapped_column(Text)
     body: Mapped[str] = mapped_column(Text)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=utc_now)
 
 
 class AuditEvent(Base):
@@ -172,4 +180,4 @@ class AuditEvent(Base):
     entity_type: Mapped[str] = mapped_column(String(100))
     entity_id: Mapped[str] = mapped_column(String(100))
     payload: Mapped[dict] = mapped_column(JSON, default=dict)
-    created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=utc_now)

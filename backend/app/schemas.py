@@ -98,6 +98,46 @@ class DashboardStats(BaseModel):
     average_lead_score: float
 
 
+class BookingBase(BaseModel):
+    inquiry_id: int | None = None
+    artist_id: int | None = None
+    booking_date: datetime | None = None
+    status: str = "tentative"
+    fee_amount: Decimal | None = None
+    deposit_paid: bool = False
+    contract_url: str | None = None
+    production_notes: str | None = None
+
+
+class BookingCreate(BookingBase):
+    pass
+
+
+class BookingRead(BookingBase):
+    model_config = ConfigDict(from_attributes=True)
+
+    id: int
+    created_at: datetime
+
+
+class AvailabilitySlotBase(BaseModel):
+    artist_id: int
+    start_date: datetime
+    end_date: datetime
+    status: str = "available"
+
+
+class AvailabilitySlotCreate(AvailabilitySlotBase):
+    pass
+
+
+class AvailabilitySlotRead(AvailabilitySlotBase):
+    model_config = ConfigDict(from_attributes=True)
+
+    id: int
+    created_at: datetime
+
+
 class LoginRequest(BaseModel):
     email: EmailStr
     password: str

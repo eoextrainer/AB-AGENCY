@@ -1,8 +1,8 @@
-from app.db import Base, engine
+from app.db import init_database
 
 
 def run() -> None:
-    Base.metadata.create_all(bind=engine)
+    init_database()
 
 
 if __name__ == "__main__":
