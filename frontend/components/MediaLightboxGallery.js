@@ -2,6 +2,8 @@
 
 import { useState } from "react";
 
+import { getYouTubeEmbedUrl, getYouTubeVideoId, isYouTubeAsset } from "@/lib/video";
+
 export function MediaLightboxGallery({ assets = [] }) {
   const [activeAsset, setActiveAsset] = useState(null);
 
@@ -39,7 +41,17 @@ export function MediaLightboxGallery({ assets = [] }) {
             </div>
             <div className="lightbox-media">
               {activeAsset.asset_type === "video" ? (
-                <video controls autoPlay src={activeAsset.url} poster={activeAsset.thumbnail_url || undefined} />
+                isYouTubeAsset(activeAsset.url) ? (
+                  <iframe
+                    src={getYouTubeEmbedUrl(getYouTubeVideoId(activeAsset.url))}
+                    title={activeAsset.title}
+                    allow="autoplay; encrypted-media; picture-in-picture"
+                    referrerPolicy="strict-origin-when-cross-origin"
+                    allowFullScreen
+                  />
+                ) : (
+                  <video controls autoPlay src={activeAsset.url} poster={activeAsset.thumbnail_url || undefined} />
+                )
               ) : (
                 <img src={activeAsset.url} alt={activeAsset.alt_text || activeAsset.title} />
               )}

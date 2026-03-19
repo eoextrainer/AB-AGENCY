@@ -33,5 +33,6 @@ describe("ArtistPortalView", () => {
     await waitFor(() => expect(screen.getAllByText("Ambre Lenoir").length).toBeGreaterThan(0));
     expect(screen.getByText("Resume artistique")).toBeInTheDocument();
     expect(screen.getByText("Galerie curatoriale")).toBeInTheDocument();
+    expect(screen.getByText("Reel prive")).toBeInTheDocument();
   });
 });

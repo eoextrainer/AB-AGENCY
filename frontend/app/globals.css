@@ -174,13 +174,24 @@ textarea {
   padding: 24px;
 }
 
+.hero-card,
+.spotlight-panel {
+  align-content: start;
+}
+
 .content-grid {
   grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: start;
 }
 
 .artist-list {
   display: grid;
   gap: 16px;
+}
+
+.featured-artist-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: stretch;
 }
 
 .artist-roster {
@@ -201,6 +212,20 @@ textarea {
 .featured-artist-card {
   display: grid;
   gap: 14px;
+}
+
+.featured-artist-tile {
+  height: 100%;
+}
+
+.featured-artist-tile .featured-artist-card {
+  grid-template-rows: auto 1fr;
+  height: 100%;
+}
+
+.featured-artists-panel {
+  display: grid;
+  gap: 18px;
 }
 
 .artist-row {
@@ -261,6 +286,12 @@ textarea {
   border-radius: 999px;
   background: var(--accent-soft);
   border: 1px solid rgba(185, 146, 90, 0.38);
+}
+
+.pill-small {
+  padding: 6px 10px;
+  font-size: 0.76rem;
+  letter-spacing: 0.04em;
 }
 
 .button {
@@ -416,8 +447,19 @@ textarea {
   filter: saturate(0.92) contrast(1.04);
 }
 
+.video-tile iframe {
+  display: block;
+  width: 100%;
+  height: 220px;
+  border: 0;
+}
+
 .spotlight-video video {
-  height: 240px;
+  height: 200px;
+}
+
+.spotlight-video iframe {
+  height: 200px;
 }
 
 .video-tile::after {
@@ -502,9 +544,15 @@ textarea {
 
 .lightbox-media,
 .lightbox-media video,
-.lightbox-media img {
+.lightbox-media img,
+.lightbox-media iframe {
   width: 100%;
   border-radius: 20px;
+}
+
+.lightbox-media iframe {
+  min-height: 420px;
+  border: 0;
 }
 
 .credentials-drawer {
@@ -559,6 +607,42 @@ textarea {
   gap: 18px;
 }
 
+.artist-page-video-tile iframe,
+.artist-page-video-tile video,
+.login-video-tile iframe,
+.login-video-tile video,
+.portal-video-tile iframe,
+.portal-video-tile video {
+  height: 220px;
+}
+
+.services-layout {
+  display: grid;
+  gap: 20px;
+  grid-template-columns: minmax(0, 1fr) minmax(260px, 360px);
+  align-items: center;
+}
+
+.services-pill-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: flex-start;
+}
+
+.service-video-tile video {
+  height: 180px;
+}
+
+.service-video-tile iframe {
+  height: 180px;
+}
+
+.trust-video-tile iframe,
+.trust-video-tile video {
+  height: 170px;
+}
+
 @media (max-width: 900px) {
   .hero-panel,
   .content-grid,
@@ -568,7 +652,8 @@ textarea {
   .artist-row,
   .portal-grid,
   .artist-identity-block,
-  .gallery-grid {
+  .gallery-grid,
+  .services-layout {
     grid-template-columns: 1fr;
   }
 
@@ -583,5 +668,9 @@ textarea {
   .brand-logo {
     width: 88px;
     height: 88px;
+  }
+
+  .featured-artist-grid {
+    grid-template-columns: 1fr;
   }
 }

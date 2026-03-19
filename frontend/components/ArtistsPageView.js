@@ -3,6 +3,8 @@
 import { startTransition, useDeferredValue, useMemo, useState } from "react";
 
 import { MediaLightboxGallery } from "@/components/MediaLightboxGallery";
+import { VideoTile } from "@/components/VideoTile";
+import { getArtistVideoId } from "@/lib/video";
 
 function matchesArtist(artist, filters) {
   const search = filters.search.trim().toLowerCase();
@@ -69,7 +71,7 @@ export function ArtistsPageView({ artists }) {
       </section>
 
       <section className="artist-roster">
-        {filteredArtists.map((artist) => (
+        {filteredArtists.map((artist, index) => (
           <article key={artist.slug} className="artist-row panel">
             <div className="artist-profile-pane">
               <div className="artist-identity-block">
@@ -113,6 +115,7 @@ export function ArtistsPageView({ artists }) {
             </div>
             <div className="artist-media-pane">
               <p className="eyebrow">Photos et videos</p>
+              <VideoTile label="Bande demo" videoId={getArtistVideoId(artist, index)} className="artist-page-video-tile" />
               <MediaLightboxGallery assets={artist.media_assets || []} />
             </div>
           </article>

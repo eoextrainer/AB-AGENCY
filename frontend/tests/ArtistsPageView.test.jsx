@@ -22,5 +22,6 @@ describe("ArtistsPageView", () => {
 
     expect(screen.getByText("8 ans")).toBeInTheDocument();
     expect(screen.getByText("Photo")).toBeInTheDocument();
+    expect(screen.getAllByText("Bande demo").length).toBeGreaterThan(0);
   });
 });

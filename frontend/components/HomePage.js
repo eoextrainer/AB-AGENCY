@@ -1,3 +1,6 @@
+import { VideoTile } from "@/components/VideoTile";
+import { getArtistVideoId } from "@/lib/video";
+
 export function HomePage({ homepage, spotlight }) {
   return (
     <div className="page-stack">
@@ -22,63 +25,60 @@ export function HomePage({ homepage, spotlight }) {
               <li key={marker}>{marker}</li>
             ))}
           </ul>
+          <VideoTile label="Rythme production" videoId="miEl69BgVIU" className="trust-video-tile" />
         </div>
       </section>
 
-      <section className="content-grid">
-        <div className="panel">
-          <p className="eyebrow">Artistes en avant</p>
-          <div className="artist-list">
-            {homepage.featured_artists.map((artist) => (
-              <article key={artist.slug} className="artist-card compact">
-                <div className="featured-artist-card">
-                  <div>
-                    <span className="tag">{artist.discipline}</span>
-                    <h3>{artist.name}</h3>
-                    <p>{artist.headline}</p>
-                  </div>
-                  <div className="video-tile">
-                    <video autoPlay muted loop playsInline poster={artist.portrait_image_url || artist.media_assets?.[0]?.thumbnail_url || undefined}>
-                      <source src={artist.teaser_video_url || artist.hero_video_url} />
-                    </video>
-                    <span className="video-tile-label">Extrait video</span>
-                  </div>
-                </div>
-                <div className="card-meta">
-                  <span>{artist.group_size}</span>
-                  <span>{artist.mood}</span>
-                </div>
-              </article>
-            ))}
-          </div>
-        </div>
+      <section className="panel spotlight-panel">
+        <p className="eyebrow">Focus contenu</p>
+        <h3>{spotlight.title}</h3>
+        <p>{spotlight.body}</p>
+        <VideoTile label="Capsule curatoriale" videoId="8D9IBNEASYw" className="spotlight-video" />
+        <ul>
+          {spotlight.highlights.map((highlight) => (
+            <li key={highlight}>{highlight}</li>
+          ))}
+        </ul>
+      </section>
 
-        <div className="panel spotlight-panel">
-          <p className="eyebrow">Focus contenu</p>
-          <h3>{spotlight.title}</h3>
-          <p>{spotlight.body}</p>
-          <div className="video-tile spotlight-video">
-            <video autoPlay muted loop playsInline poster={spotlight.videoPoster}>
-              <source src={spotlight.videoUrl} />
-            </video>
-            <span className="video-tile-label">Capsule curatoriale</span>
-          </div>
-          <ul>
-            {spotlight.highlights.map((highlight) => (
-              <li key={highlight}>{highlight}</li>
-            ))}
-          </ul>
+      <section className="panel featured-artists-panel">
+        <p className="eyebrow">Artistes en avant</p>
+        <div className="artist-list featured-artist-grid">
+          {homepage.featured_artists.map((artist, index) => (
+            <article key={artist.slug} className="artist-card compact featured-artist-tile">
+              <div className="featured-artist-card">
+                <div>
+                  <span className="tag">{artist.discipline}</span>
+                  <h3>{artist.name}</h3>
+                  <p>{artist.headline}</p>
+                </div>
+                <VideoTile
+                  label="Extrait video"
+                  videoId={getArtistVideoId(artist, index)}
+                />
+              </div>
+              <div className="card-meta">
+                <span>{artist.group_size}</span>
+                <span>{artist.mood}</span>
+              </div>
+            </article>
+          ))}
         </div>
       </section>
 
       <section className="panel services-panel">
-        <p className="eyebrow">Axes de service</p>
-        <div className="pill-grid">
-          {homepage.featured_services.map((service) => (
-            <span key={service} className="pill">
-              {service}
-            </span>
-          ))}
+        <div className="services-layout">
+          <div>
+            <p className="eyebrow">Axes de service</p>
+            <div className="services-pill-grid">
+              {homepage.featured_services.map((service) => (
+                <span key={service} className="pill pill-small">
+                  {service}
+                </span>
+              ))}
+            </div>
+          </div>
+          <VideoTile label="Perspective studio" videoId="TazDN6D9pl4" className="service-video-tile" />
         </div>
       </section>
     </div>

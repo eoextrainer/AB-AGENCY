@@ -18,6 +18,8 @@ describe("LoginPageView", () => {
   it("redirects an admin after successful login", async () => {
     render(<LoginPageView />);
 
+    expect(screen.getByText("Acces artiste")).toBeInTheDocument();
+
     fireEvent.change(screen.getByLabelText("Nom d'utilisateur"), { target: { value: "admin" } });
     fireEvent.change(screen.getByLabelText("Mot de passe"), { target: { value: "admin123" } });
     fireEvent.click(screen.getByText("Se connecter"));

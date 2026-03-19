@@ -5,6 +5,8 @@ import { useRouter } from "next/navigation";
 
 import { getArtistPortal, SESSION_TOKEN_KEY } from "@/lib/api";
 import { MediaLightboxGallery } from "@/components/MediaLightboxGallery";
+import { VideoTile } from "@/components/VideoTile";
+import { getArtistVideoId } from "@/lib/video";
 
 export function ArtistPortalView() {
   const router = useRouter();
@@ -138,6 +140,7 @@ export function ArtistPortalView() {
 
       <section className="panel">
         <p className="eyebrow">Galerie curatoriale</p>
+        <VideoTile label="Reel prive" videoId={getArtistVideoId(artist)} className="portal-video-tile" />
         <MediaLightboxGallery assets={artist.media_assets || []} />
       </section>
     </div>

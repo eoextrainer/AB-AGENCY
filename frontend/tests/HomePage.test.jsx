@@ -19,7 +19,10 @@ describe("HomePage", () => {
 
     expect(screen.getByText("Performance vertigineuse.")).toBeInTheDocument();
     expect(screen.getByText("Luna")).toBeInTheDocument();
+    expect(screen.getByText("Rythme production")).toBeInTheDocument();
     expect(screen.getByText("Extrait video")).toBeInTheDocument();
     expect(screen.getByText("Capsule curatoriale")).toBeInTheDocument();
+    expect(screen.getByText("Perspective studio")).toBeInTheDocument();
+    expect(screen.getAllByTitle(/video/i).length).toBeGreaterThan(0);
   });
 });

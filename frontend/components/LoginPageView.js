@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
+import { VideoTile } from "@/components/VideoTile";
 import { getAdminAccessToken, getCurrentUser, SESSION_TOKEN_KEY } from "@/lib/api";
 
 const demoCredentials = [
@@ -54,6 +55,7 @@ export function LoginPageView() {
           <h2>Accedez a votre espace en toute discretion.</h2>
           <p className="muted">Les comptes administrateur et artistes sont verifies directement contre le backend et la base de donnees.</p>
         </div>
+        <VideoTile label="Acces artiste" videoId="_5KmjV697Zg" className="login-video-tile" />
         <form className="auth-form" onSubmit={handleSubmit}>
           <label>
             Nom d'utilisateur

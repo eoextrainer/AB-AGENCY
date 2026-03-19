@@ -33,11 +33,11 @@ SEEDED_ARTISTS = [
             {"period": "2025", "production": "Halo Dinner", "venue": "Somerset House", "role": "Duo aerien"},
             {"period": "2024", "production": "Museum by Night", "venue": "V&A Museum", "role": "Installation vivante"},
         ],
-        "hero_video_url": "https://cdn.coverr.co/videos/coverr-aerial-silks-1578393576073?download=1080p",
-        "teaser_video_url": "https://cdn.coverr.co/videos/coverr-swinging-from-aerial-silk-1572458909737?download=1080p",
+        "hero_video_url": "https://www.youtube.com/watch?v=ZWS6K_8N9E0",
+        "teaser_video_url": "https://www.youtube.com/watch?v=CYrN71Ltoz8",
         "media_assets": [
             {"asset_type": "image", "title": "Duo suspendu", "url": "https://images.unsplash.com/photo-1515169067868-5387ec356754?auto=format&fit=crop&w=1200&q=80", "thumbnail_url": "https://images.unsplash.com/photo-1515169067868-5387ec356754?auto=format&fit=crop&w=600&q=80", "alt_text": "Luna Silk Duo en suspension"},
-            {"asset_type": "video", "title": "Extrait duo", "url": "https://cdn.coverr.co/videos/coverr-aerial-silks-1578393576073?download=1080p", "thumbnail_url": "https://images.unsplash.com/photo-1515169067868-5387ec356754?auto=format&fit=crop&w=600&q=80", "alt_text": "Video de Luna Silk Duo"},
+            {"asset_type": "video", "title": "Extrait duo", "url": "https://www.youtube.com/watch?v=ZWS6K_8N9E0", "thumbnail_url": "https://images.unsplash.com/photo-1515169067868-5387ec356754?auto=format&fit=crop&w=600&q=80", "alt_text": "Video de Luna Silk Duo"},
         ],
     },
     {
@@ -61,11 +61,11 @@ SEEDED_ARTISTS = [
             {"period": "2025", "production": "Velocity", "venue": "DockX Brussels", "role": "Solo Cyr"},
             {"period": "2024", "production": "Brand Pulse", "venue": "Tour & Taxis", "role": "Ouverture de scene"},
         ],
-        "hero_video_url": "https://cdn.coverr.co/videos/coverr-female-dancer-performing-1560260224327?download=1080p",
-        "teaser_video_url": "https://cdn.coverr.co/videos/coverr-ballerina-warming-up-1562833129043?download=1080p",
+        "hero_video_url": "https://www.youtube.com/watch?v=4sXCTnk0yfs",
+        "teaser_video_url": "https://www.youtube.com/watch?v=EFpTVI5j2K0",
         "media_assets": [
             {"asset_type": "image", "title": "Portrait cyr", "url": "https://images.unsplash.com/photo-1503095396549-807759245b35?auto=format&fit=crop&w=1200&q=80", "thumbnail_url": "https://images.unsplash.com/photo-1503095396549-807759245b35?auto=format&fit=crop&w=600&q=80", "alt_text": "Volt Cyr en scene"},
-            {"asset_type": "video", "title": "Extrait roue Cyr", "url": "https://cdn.coverr.co/videos/coverr-female-dancer-performing-1560260224327?download=1080p", "thumbnail_url": "https://images.unsplash.com/photo-1503095396549-807759245b35?auto=format&fit=crop&w=600&q=80", "alt_text": "Video de Volt Cyr"},
+            {"asset_type": "video", "title": "Extrait roue Cyr", "url": "https://www.youtube.com/watch?v=4sXCTnk0yfs", "thumbnail_url": "https://images.unsplash.com/photo-1503095396549-807759245b35?auto=format&fit=crop&w=600&q=80", "alt_text": "Video de Volt Cyr"},
         ],
     },
     {
@@ -90,12 +90,12 @@ SEEDED_ARTISTS = [
             {"period": "2024", "production": "Maison Lumiere", "venue": "Hotel Salomon de Rothschild", "role": "Performance signature"},
             {"period": "2023", "production": "Pulse Residency", "venue": "La Seine Musicale", "role": "Artiste residente"},
         ],
-        "hero_video_url": "https://cdn.coverr.co/videos/coverr-ballerina-warming-up-1562833129043?download=1080p",
-        "teaser_video_url": "https://cdn.coverr.co/videos/coverr-contemporary-dance-performance-1562833133577?download=1080p",
+        "hero_video_url": "https://www.youtube.com/watch?v=zreMvcHghP8",
+        "teaser_video_url": "https://www.youtube.com/watch?v=NE8FK9VV6SY",
         "media_assets": [
             {"asset_type": "image", "title": "Portrait editorial", "url": "https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?auto=format&fit=crop&w=1200&q=80", "thumbnail_url": "https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?auto=format&fit=crop&w=600&q=80", "alt_text": "Portrait d'Ambre Lenoir en posture choregraphique"},
             {"asset_type": "image", "title": "Scene gala", "url": "https://images.unsplash.com/photo-1503095396549-807759245b35?auto=format&fit=crop&w=1200&q=80", "thumbnail_url": "https://images.unsplash.com/photo-1503095396549-807759245b35?auto=format&fit=crop&w=600&q=80", "alt_text": "Ambre Lenoir sur une scene de gala"},
-            {"asset_type": "video", "title": "Showreel", "url": "https://cdn.coverr.co/videos/coverr-female-dancer-performing-1560260224327?download=1080p", "thumbnail_url": "https://images.unsplash.com/photo-1508804185872-d7badad00f7d?auto=format&fit=crop&w=600&q=80", "alt_text": "Apercu video d'Ambre Lenoir"},
+            {"asset_type": "video", "title": "Showreel", "url": "https://www.youtube.com/watch?v=zreMvcHghP8", "thumbnail_url": "https://images.unsplash.com/photo-1508804185872-d7badad00f7d?auto=format&fit=crop&w=600&q=80", "alt_text": "Apercu video d'Ambre Lenoir"},
         ],
     },
     {
@@ -120,12 +120,12 @@ SEEDED_ARTISTS = [
             {"period": "2024", "production": "Le Bal Suspendu", "venue": "InterContinental Marseille", "role": "Performance de diner"},
             {"period": "2023", "production": "Aura", "venue": "Musee des Confluences", "role": "Creation immersive"},
         ],
-        "hero_video_url": "https://cdn.coverr.co/videos/coverr-gymnast-training-in-studio-1579988943555?download=1080p",
-        "teaser_video_url": "https://cdn.coverr.co/videos/coverr-swinging-from-aerial-silk-1572458909737?download=1080p",
+        "hero_video_url": "https://www.youtube.com/watch?v=X4nEnyLoOcU",
+        "teaser_video_url": "https://www.youtube.com/watch?v=jsqkZUHEaus",
         "media_assets": [
             {"asset_type": "image", "title": "Portrait en hauteur", "url": "https://images.unsplash.com/photo-1521334884684-d80222895322?auto=format&fit=crop&w=1200&q=80", "thumbnail_url": "https://images.unsplash.com/photo-1521334884684-d80222895322?auto=format&fit=crop&w=600&q=80", "alt_text": "Celeste Moreau en suspension"},
             {"asset_type": "image", "title": "Rubans aeriens", "url": "https://images.unsplash.com/photo-1515169067868-5387ec356754?auto=format&fit=crop&w=1200&q=80", "thumbnail_url": "https://images.unsplash.com/photo-1515169067868-5387ec356754?auto=format&fit=crop&w=600&q=80", "alt_text": "Danse aerienne en rubans"},
-            {"asset_type": "video", "title": "Extrait suspendu", "url": "https://cdn.coverr.co/videos/coverr-aerial-silks-1578393576073?download=1080p", "thumbnail_url": "https://images.unsplash.com/photo-1516280440614-37939bbacd81?auto=format&fit=crop&w=600&q=80", "alt_text": "Video de Celeste Moreau en danse aerienne"},
+            {"asset_type": "video", "title": "Extrait suspendu", "url": "https://www.youtube.com/watch?v=X4nEnyLoOcU", "thumbnail_url": "https://images.unsplash.com/photo-1516280440614-37939bbacd81?auto=format&fit=crop&w=600&q=80", "alt_text": "Video de Celeste Moreau en danse aerienne"},
         ],
     },
     {
@@ -150,12 +150,12 @@ SEEDED_ARTISTS = [
             {"period": "2024", "production": "Nuit Havana Club", "venue": "Les Bassins des Lumieres", "role": "Performance immersive"},
             {"period": "2023", "production": "Ritmo Vivo", "venue": "Casino Barriere", "role": "Tete d'affiche"},
         ],
-        "hero_video_url": "https://cdn.coverr.co/videos/coverr-couple-dancing-1594311604990?download=1080p",
-        "teaser_video_url": "https://cdn.coverr.co/videos/coverr-dance-1574888719139?download=1080p",
+        "hero_video_url": "https://www.youtube.com/watch?v=fEZdmgHNa10",
+        "teaser_video_url": "https://www.youtube.com/watch?v=iXOuzMZ8TtU",
         "media_assets": [
             {"asset_type": "image", "title": "Portrait scene", "url": "https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?auto=format&fit=crop&w=1200&q=80", "thumbnail_url": "https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?auto=format&fit=crop&w=600&q=80", "alt_text": "Portrait de Santiago Rivera"},
             {"asset_type": "image", "title": "Soiree salsa", "url": "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=1200&q=80", "thumbnail_url": "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=600&q=80", "alt_text": "Santiago Rivera en performance salsa"},
-            {"asset_type": "video", "title": "Showreel salsa", "url": "https://cdn.coverr.co/videos/coverr-dancing-people-1571753457233?download=1080p", "thumbnail_url": "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=600&q=80", "alt_text": "Video salsa de Santiago Rivera"},
+            {"asset_type": "video", "title": "Showreel salsa", "url": "https://www.youtube.com/watch?v=fEZdmgHNa10", "thumbnail_url": "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=600&q=80", "alt_text": "Video salsa de Santiago Rivera"},
         ],
     },
 ]
