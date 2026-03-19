@@ -10,6 +10,7 @@ const initialState = {
   email: "",
   phone: "",
   event_type: "Corporate Gala",
+  event_date: "",
   location: "",
   venue_type: "Indoor",
   ceiling_height_meters: "",
@@ -35,6 +36,7 @@ export function InquiryPageView({ artists = [], initialArtist = "" }) {
     try {
       const payload = {
         ...formState,
+        event_date: formState.event_date || null,
         ceiling_height_meters: formState.ceiling_height_meters ? Number(formState.ceiling_height_meters) : null,
         budget_min: formState.budget_min ? Number(formState.budget_min) : null,
         budget_max: formState.budget_max ? Number(formState.budget_max) : null
@@ -86,6 +88,10 @@ export function InquiryPageView({ artists = [], initialArtist = "" }) {
             <input value={formState.event_type} onChange={(event) => setFormState((current) => ({ ...current, event_type: event.target.value }))} required />
           </label>
           <label>
+            Event date
+            <input type="datetime-local" value={formState.event_date} onChange={(event) => setFormState((current) => ({ ...current, event_date: event.target.value }))} />
+          </label>
+          <label>
             Location
             <input value={formState.location} onChange={(event) => setFormState((current) => ({ ...current, location: event.target.value }))} required />
           </label>
@@ -121,6 +127,22 @@ export function InquiryPageView({ artists = [], initialArtist = "" }) {
             ))}
           </div>
         </fieldset>
+        <label>
+          Preferred disciplines
+          <input
+            value={formState.preferred_disciplines.join(", ")}
+            onChange={(event) =>
+              setFormState((current) => ({
+                ...current,
+                preferred_disciplines: event.target.value
+                  .split(",")
+                  .map((item) => item.trim())
+                  .filter(Boolean)
+              }))
+            }
+            placeholder="Aerial, Ground Performance, Duo"
+          />
+        </label>
         <label>
           Message
           <textarea rows="5" value={formState.message} onChange={(event) => setFormState((current) => ({ ...current, message: event.target.value }))} required />

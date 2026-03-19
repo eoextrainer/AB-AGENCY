@@ -138,6 +138,13 @@ class AvailabilitySlotRead(AvailabilitySlotBase):
     created_at: datetime
 
 
+class AdminOverview(BaseModel):
+    stats: DashboardStats
+    inquiries: list[InquiryRead]
+    bookings: list[BookingRead]
+    availability: list[AvailabilitySlotRead]
+
+
 class LoginRequest(BaseModel):
     email: EmailStr
     password: str

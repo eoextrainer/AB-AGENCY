@@ -13,7 +13,9 @@ describe("InquiryPageView", () => {
     fireEvent.change(screen.getByLabelText("Company"), { target: { value: "Acme" } });
     fireEvent.change(screen.getByLabelText("Contact name"), { target: { value: "Jordan" } });
     fireEvent.change(screen.getByLabelText("Email"), { target: { value: "jordan@example.com" } });
+    fireEvent.change(screen.getByLabelText("Event date"), { target: { value: "2026-07-12T18:00" } });
     fireEvent.change(screen.getByLabelText("Location"), { target: { value: "London" } });
+    fireEvent.change(screen.getByLabelText("Preferred disciplines"), { target: { value: "Aerial, Duo" } });
     fireEvent.change(screen.getByLabelText("Message"), { target: { value: "Need an act" } });
     fireEvent.click(screen.getByText("Submit inquiry"));
 

@@ -1,4 +1,5 @@
 import { buildApiUrl, getArtists, getDashboardSnapshot, getHomepageData, submitInquiry } from "@/lib/api";
+import { getAdminAccessToken } from "@/lib/api";
 
 describe("api helpers", () => {
   it("builds API urls", () => {
@@ -27,7 +28,21 @@ describe("api helpers", () => {
     expect(response.lead_score).toBe(90);
   });
 
+  it("returns an admin access token when login succeeds", async () => {
+    global.fetch = vi.fn().mockResolvedValue({ ok: true, json: async () => ({ access_token: "token-123" }) });
+
+    await expect(getAdminAccessToken({ email: "admin@ab-agency.com", password: "admin12345" })).resolves.toBe("token-123");
+  });
+
   it("returns null dashboard snapshot when token is missing", async () => {
     await expect(getDashboardSnapshot("")).resolves.toBeNull();
+  });
+
+  it("returns dashboard overview from the backend", async () => {
+    global.fetch = vi.fn().mockResolvedValue({ ok: true, json: async () => ({ stats: { total_artists: 2 }, inquiries: [], bookings: [], availability: [] }) });
+
+    const dashboard = await getDashboardSnapshot("token-123");
+
+    expect(dashboard.stats.total_artists).toBe(2);
   });
 });

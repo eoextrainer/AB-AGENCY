@@ -21,6 +21,30 @@ async function fetchJson(path, options = {}) {
   return response.json();
 }
 
+export async function getAdminAccessToken(credentials) {
+  if (!credentials?.email || !credentials?.password) {
+    return null;
+  }
+
+  try {
+    const response = await fetch(buildApiUrl("/auth/login"), {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      cache: "no-store",
+      body: JSON.stringify(credentials)
+    });
+
+    if (!response.ok) {
+      return null;
+    }
+
+    const payload = await response.json();
+    return payload.access_token;
+  } catch {
+    return null;
+  }
+}
+
 export async function getHomepageData() {
   try {
     return await fetchJson("/public/homepage");
@@ -56,14 +80,7 @@ export async function getDashboardSnapshot(token) {
   }
 
   try {
-    const [stats, inquiries, bookings, availability] = await Promise.all([
-      fetchJson("/dashboard/stats", { headers: { Authorization: `Bearer ${token}` } }),
-      fetchJson("/inquiries", { headers: { Authorization: `Bearer ${token}` } }),
-      fetchJson("/bookings", { headers: { Authorization: `Bearer ${token}` } }),
-      fetchJson("/availability", { headers: { Authorization: `Bearer ${token}` } })
-    ]);
-
-    return { stats, inquiries, bookings, availability };
+    return await fetchJson("/dashboard/overview", { headers: { Authorization: `Bearer ${token}` } });
   } catch {
     return null;
   }

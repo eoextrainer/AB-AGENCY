@@ -27,9 +27,12 @@ def test_create_inquiry_persists_request(client):
             "contact_name": "Jordan Vale",
             "email": "jordan@example.com",
             "event_type": "festival",
+            "event_date": "2026-07-12T18:00:00",
             "location": "London",
             "venue_type": "indoor",
+            "budget_min": 6000,
             "budget_max": 12000,
+            "preferred_disciplines": ["Aerial", "Duo"],
             "preferred_artist_slugs": ["luna-silk-duo"],
             "message": "Looking for a headline act"
         },
@@ -37,6 +40,8 @@ def test_create_inquiry_persists_request(client):
 
     assert response.status_code == 200
     assert response.json()["lead_score"] >= 80
+    assert response.json()["budget_min"] == "6000.00"
+    assert response.json()["preferred_disciplines"] == ["Aerial", "Duo"]
 
 
 def test_list_inquiries_requires_staff(client, auth_headers, sample_inquiry):

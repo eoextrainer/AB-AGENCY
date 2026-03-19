@@ -6,7 +6,7 @@ describe("AdminPageView", () => {
   it("renders fallback state without dashboard data", () => {
     render(<AdminPageView dashboard={null} />);
 
-    expect(screen.getByText("Admin API token missing.")).toBeInTheDocument();
+    expect(screen.getByText("Administrative data is unavailable.")).toBeInTheDocument();
   });
 
   it("renders dashboard metrics", () => {
@@ -14,15 +14,17 @@ describe("AdminPageView", () => {
       <AdminPageView
         dashboard={{
           stats: { total_artists: 2, featured_artists: 2, open_inquiries: 3, booked_inquiries: 1 },
-          inquiries: [{ id: 1, company_name: "Acme", event_type: "Festival", lead_score: 80 }],
-          bookings: [],
+          inquiries: [{ id: 1, company_name: "Acme", contact_name: "Jordan Vale", email: "jordan@example.com", phone: "12345", created_at: "2026-03-19T12:00:00Z", event_type: "Festival", location: "London", venue_type: "Indoor", budget_min: 5000, budget_max: 12000, preferred_artist_slugs: ["luna-silk-duo"], lead_score: 80, status: "qualified", ceiling_height_meters: 9, message: "Need a standout opener" }],
+          bookings: [{ id: 1 }],
           availability: [{ id: 1, artist_id: 1, status: "available" }]
         }}
       />
     );
 
     expect(screen.getByText("Total artists")).toBeInTheDocument();
-    expect(screen.getByText("Featured artists")).toBeInTheDocument();
-    expect(screen.getByText(/Acme/)).toBeInTheDocument();
+    expect(screen.getByText("Submitted contacts")).toBeInTheDocument();
+    expect(screen.getByText("Requested events and budget targets")).toBeInTheDocument();
+    expect(screen.getAllByText(/Acme/).length).toBeGreaterThan(0);
+    expect(screen.getByText(/Jordan Vale/)).toBeInTheDocument();
   });
 });

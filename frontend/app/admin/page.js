@@ -1,7 +1,11 @@
 import { AdminPageView } from "@/components/AdminPageView";
-import { getDashboardSnapshot } from "@/lib/api";
+import { getAdminAccessToken, getDashboardSnapshot } from "@/lib/api";
 
 export default async function AdminPage() {
-  const dashboard = await getDashboardSnapshot(process.env.NEXT_PUBLIC_ADMIN_TOKEN || "");
+  const token = await getAdminAccessToken({
+    email: process.env.ADMIN_API_EMAIL || "admin@ab-agency.com",
+    password: process.env.ADMIN_API_PASSWORD || "admin12345"
+  });
+  const dashboard = await getDashboardSnapshot(token || "");
   return <AdminPageView dashboard={dashboard} />;
 }

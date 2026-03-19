@@ -16,6 +16,51 @@ RESET='\033[0m'
 
 cd "${REPO_ROOT}"
 
+CI_MODE=false
+AUTO_PUSH_ROLLBACK=false
+FURTHER_ACTIONS_RESPONSE=""
+RELEASE_NOTES_DIR="${REPO_ROOT}/docs/releases"
+
+usage() {
+  cat <<'EOF'
+Usage: stable_release.sh [--ci] [--yes] [--push-rollback] [--help]
+
+  --ci             Run a non-interactive stable release for CI automation.
+  --yes            Answer yes to the further-actions prompt and open the rollback menu.
+  --push-rollback  When a rollback branch is created, offer an automatic push and default to yes in CI mode.
+  --help           Show this help message.
+EOF
+}
+
+parse_args() {
+  while [[ $# -gt 0 ]]; do
+    case "$1" in
+      --ci)
+        CI_MODE=true
+        FURTHER_ACTIONS_RESPONSE="no"
+        shift
+        ;;
+      --yes)
+        FURTHER_ACTIONS_RESPONSE="yes"
+        shift
+        ;;
+      --push-rollback)
+        AUTO_PUSH_ROLLBACK=true
+        shift
+        ;;
+      --help)
+        usage
+        exit 0
+        ;;
+      *)
+        error "Unknown argument: $1"
+        usage
+        exit 1
+        ;;
+    esac
+  done
+}
+
 banner() {
   printf "${MAGENTA}${BOLD}\n"
   printf "==============================================\n"
@@ -48,12 +93,13 @@ require_git_repo() {
 }
 
 create_stable_release() {
-  local current_branch stable_stamp stable_tag commit_message
+  local current_branch stable_stamp stable_tag commit_message previous_tag release_notes_file
 
   current_branch=$(git branch --show-current)
   stable_stamp=$(date +"%Y%m%d-%H%M%S")
   stable_tag="stable-${stable_stamp}"
   commit_message="stable: ${stable_stamp}"
+  previous_tag=$(git tag --list 'stable-*' --sort=-creatordate | head -n 1 || true)
 
   info "Saving the latest stable version from branch '${current_branch}'."
   git add -A
@@ -65,12 +111,47 @@ create_stable_release() {
     success "Committed latest changes as '${commit_message}'."
   fi
 
+  mkdir -p "${RELEASE_NOTES_DIR}"
+  release_notes_file="${RELEASE_NOTES_DIR}/${stable_tag}.md"
+  generate_release_notes "${stable_tag}" "${previous_tag}" > "${release_notes_file}"
+  git add "${release_notes_file}"
+
+  if ! git diff --cached --quiet; then
+    if git log -1 --pretty=%s | grep -q "^stable: "; then
+      git commit --amend --no-edit
+    else
+      git commit -m "docs: add release notes for ${stable_tag}"
+    fi
+  fi
+
   git tag -a "${stable_tag}" -m "Stable release ${stable_tag}"
   success "Created stable tag '${stable_tag}'."
 
   git push origin "${current_branch}"
   git push origin "${stable_tag}"
   success "Pushed branch '${current_branch}' and tag '${stable_tag}' to origin."
+}
+
+generate_release_notes() {
+  local stable_tag="$1"
+  local previous_tag="$2"
+  local commit_range
+
+  if [[ -n "${previous_tag}" ]]; then
+    commit_range="${previous_tag}..HEAD"
+  else
+    commit_range="HEAD"
+  fi
+
+  printf "# %s\n\n" "${stable_tag}"
+  printf "Generated on %s\n\n" "$(date -u +"%Y-%m-%d %H:%M:%S UTC")"
+  if [[ -n "${previous_tag}" ]]; then
+    printf "Previous stable tag: %s\n\n" "${previous_tag}"
+  else
+    printf "Previous stable tag: none\n\n"
+  fi
+  printf "## Commits Included\n\n"
+  git log --pretty='- %h %s' ${commit_range}
 }
 
 rollback_menu() {
@@ -127,16 +208,37 @@ rollback_menu() {
   fi
 
   success "Rollback branch '${branch_name}' is now checked out at '${selected_tag}'."
-  warn "Push the rollback branch manually if you want it published: git push -u origin ${branch_name}"
+
+  if [[ "${AUTO_PUSH_ROLLBACK}" == true ]]; then
+    git push -u origin "${branch_name}"
+    success "Rollback branch '${branch_name}' was pushed to origin automatically."
+    return 0
+  fi
+
+  printf "${YELLOW}Push rollback branch '${branch_name}' to origin now? [y/N]: ${RESET}"
+  read -r push_confirm
+  if [[ ${push_confirm,,} =~ ^y(es)?$ ]]; then
+    git push -u origin "${branch_name}"
+    success "Rollback branch '${branch_name}' was pushed to origin."
+  else
+    warn "Rollback branch was created locally only. Push it manually if needed: git push -u origin ${branch_name}"
+  fi
 }
 
 main() {
   banner
+  parse_args "$@"
   require_git_repo
   create_stable_release
 
-  printf "${YELLOW}\nDo you need further actions? [y/N]: ${RESET}"
-  read -r further_actions
+  local further_actions
+  if [[ -n "${FURTHER_ACTIONS_RESPONSE}" ]]; then
+    further_actions="${FURTHER_ACTIONS_RESPONSE}"
+    info "Further actions response preset to '${further_actions}'."
+  else
+    printf "${YELLOW}\nDo you need further actions? [y/N]: ${RESET}"
+    read -r further_actions
+  fi
 
   if [[ ${further_actions,,} =~ ^y(es)?$ ]]; then
     rollback_menu
