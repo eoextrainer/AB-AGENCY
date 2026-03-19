@@ -6,7 +6,12 @@
 	],
 	"settings": {
 		"chat.tools.terminal.autoApprove": {
-			".venv/bin/python": true
+			".venv/bin/python": true,
+			"command": true,
+			"true": true,
+			"npm install": true,
+			"npm test": true,
+			"docker compose": true
 		}
 	}
 }
