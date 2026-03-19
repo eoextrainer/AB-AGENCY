@@ -17,6 +17,7 @@ export function LoginPageView() {
   const router = useRouter();
   const [formState, setFormState] = useState({ username: "", password: "" });
   const [status, setStatus] = useState({ type: "idle", message: "" });
+  const showDemoCredentials = process.env.NEXT_PUBLIC_SHOW_DEMO_CREDENTIALS !== "false";
 
   async function handleSubmit(event) {
     event.preventDefault();
@@ -72,18 +73,20 @@ export function LoginPageView() {
             <p role="status">{status.message}</p>
           </div>
         </form>
-        <details className="credentials-drawer">
-          <summary>Afficher les identifiants de demonstration</summary>
-          <div className="credentials-list">
-            {demoCredentials.map((credential) => (
-              <div key={credential.username} className="credential-item">
-                <strong>{credential.label}</strong>
-                <span>Nom d'utilisateur: {credential.username}</span>
-                <span>Mot de passe: {credential.password}</span>
-              </div>
-            ))}
-          </div>
-        </details>
+        {showDemoCredentials ? (
+          <details className="credentials-drawer">
+            <summary>Afficher les identifiants de demonstration</summary>
+            <div className="credentials-list">
+              {demoCredentials.map((credential) => (
+                <div key={credential.username} className="credential-item">
+                  <strong>{credential.label}</strong>
+                  <span>Nom d'utilisateur: {credential.username}</span>
+                  <span>Mot de passe: {credential.password}</span>
+                </div>
+              ))}
+            </div>
+          </details>
+        ) : null}
       </section>
     </div>
   );

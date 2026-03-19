@@ -162,9 +162,9 @@ SEEDED_ARTISTS = [
 
 SEEDED_USERS = [
     {"username": settings.first_superuser_username, "email": settings.first_superuser_email, "full_name": "AB Agency Admin", "password": settings.first_superuser_password, "role": UserRole.ADMIN, "artist_slug": None},
-    {"username": "ambre", "email": "ambre@ab-agency.com", "full_name": "Ambre Lenoir", "password": "pass123", "role": UserRole.CLIENT, "artist_slug": "ambre-acrobatique"},
-    {"username": "celeste", "email": "celeste@ab-agency.com", "full_name": "Celeste Moreau", "password": "pass123", "role": UserRole.CLIENT, "artist_slug": "celeste-aerienne"},
-    {"username": "santiago", "email": "santiago@ab-agency.com", "full_name": "Santiago Rivera", "password": "pass123", "role": UserRole.CLIENT, "artist_slug": "santiago-salsa"},
+    {"username": "ambre", "email": "ambre@ab-agency.com", "full_name": "Ambre Lenoir", "password": settings.artist_ambre_password, "role": UserRole.CLIENT, "artist_slug": "ambre-acrobatique"},
+    {"username": "celeste", "email": "celeste@ab-agency.com", "full_name": "Celeste Moreau", "password": settings.artist_celeste_password, "role": UserRole.CLIENT, "artist_slug": "celeste-aerienne"},
+    {"username": "santiago", "email": "santiago@ab-agency.com", "full_name": "Santiago Rivera", "password": settings.artist_santiago_password, "role": UserRole.CLIENT, "artist_slug": "santiago-salsa"},
 ]
 
 SEEDED_SERVICES = [
